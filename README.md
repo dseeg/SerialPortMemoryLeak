@@ -1,28 +1,12 @@
 # SerialPortMemoryLeak
-Demonstrates a possible memory leak(?) with SerialPort in .NET 5 under Linux
+Demonstrates a possible memory leak(?) with SerialPort in .NET 5.0.301 under Linux
 
-#### .NET Version
-.NET 5.0.301
-
-
-### Occures on
+### Tested on
 ```
-Raspberry Pi 3 Model B
+.NET Version: .NET 5.0.301
 OS: Raspbian 9.13 stretch
-Kernel: armv71 Linux 4.19.66-v7+
-CPU: ARMv7 rev 5 (v71) @ 900MHz
-RAM: 1GB
+Architecture: ARM
 ```
-
-### Does not occur on
-```
-OS: Windows 8.1
-CPU: i5-2500k
-RAM: 16GB
-```
-
-### Untested
-Other flavors of Unix and other versions of Windows
 
 # Background
 These tests were run with an Arduino connected to a Raspberry Pi via USB cable.
