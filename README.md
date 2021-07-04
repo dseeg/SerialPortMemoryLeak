@@ -1,5 +1,5 @@
 # SerialPortMemoryLeak
-Demonstrates a possible memory leak(?) with SerialPort in .NET 5.0.301 under Linux
+Demonstrates a possible memory leak (or maybe I'm just doing something really stupid) with SerialPort in .NET 5.0.301 under Linux
 
 https://github.com/dotnet/runtime/issues/55146
 
