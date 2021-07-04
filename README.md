@@ -4,9 +4,9 @@ Demonstrates a possible memory leak(?) with SerialPort in .NET 5.0.301 under Lin
 # Background
 These tests were run on a Raspberry Pi (ARM) running Raspbian 9.13 stretch and .NET 5.0.301 connected to an Arduino via USB cable.
 
-To ensure a TimeoutException occurs, I used a sketch with an empty loop() to so it would not send any data over serial and with SerialPort.ReadTimeout set to 1.
+To ensure a TimeoutException occurs, I used an arduino sketch with an empty loop() to so it would not send any data over serial and with SerialPort.ReadTimeout in set to 1 in the test application.
 
-To compare it with a run where a TimeoutExceptions did not occur, I used a sketch that transmitted data every iteration of loop() and with SerialPort.ReadTimeout set to SerialPort.InfiniteTimeout
+To compare it with a run where a TimeoutExceptions did not occur, I used an arduino sketch that transmitted data every iteration of loop() and with SerialPort.ReadTimeout set to SerialPort.InfiniteTimeout in the test application.
 
 # Problem
 ### Timeout = 1 
