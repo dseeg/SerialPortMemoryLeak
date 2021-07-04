@@ -42,6 +42,7 @@ Press p to pause, r to resume, q to quit.
     ThreadPool Completed Work Item Count (Count / 1 sec)           0
     ThreadPool Queue Length                                        0
     ThreadPool Thread Count                                        0
+    Working Set (MB)                                              84
 ```
 
 #### dumpheap -stat
