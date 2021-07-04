@@ -194,7 +194,7 @@ Found 0 unique roots (run 'gcroot -all' to see all roots).
 # Speculation
 From the data collected by dotnet-counters and dotnet-dump, and inspecting the code for SerialStream.Unix.cs, the byte[] eventually makes its way into a [SerialStreamIORequest and loaded into a queue](https://github.com/dotnet/runtime/blob/607f98c888b31566c773712c3153236c7cec05d2/src/libraries/System.IO.Ports/src/System/IO/Ports/SerialStream.Unix.cs#L435). SerialStreamIORequests [do not seem to be removed from that queue](https://github.com/dotnet/runtime/blob/607f98c888b31566c773712c3153236c7cec05d2/src/libraries/System.IO.Ports/src/System/IO/Ports/SerialStream.Unix.cs#L789) even though they should be marked as completed when the cancellation token fires.
 
-# Sketch
+# Arduino Sketch
 ```
 #include <Arduino.h>
 
