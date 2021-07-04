@@ -3,9 +3,9 @@ Demonstrates a possible memory leak(?) with SerialPort in .NET 5.0.301 under Lin
 
 ### Tested on
 ```
-.NET Version: .NET 5.0.301
-OS: Raspbian 9.13 stretch
-Architecture: ARM
+.NET 5.0.301
+Raspbian 9.13 stretch
+ARM
 ```
 
 # Background
