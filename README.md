@@ -1,7 +1,8 @@
 # SerialPortMemoryLeak
 Demonstrates a possible memory leak(?) with SerialPort in .NET 5 under Linux
 
-### .NET Version
+#### .NET Version
+.NET 5.0.301
 
 
 ### Occures on
