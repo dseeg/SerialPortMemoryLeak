@@ -21,8 +21,7 @@ RAM: 16GB
 ```
 
 ### Untested
-Other flavors of Unix
-Other versions of Windows
+Other flavors of Unix and other versions of Windows
 
 # Background
 These tests were run with an Arduino connected to a Raspberry Pi via USB cable.
@@ -136,9 +135,81 @@ Thread 75d4:
 Found 1 unique roots (run 'gcroot -all' to see all roots).
 ```
 ### Timeout = SerialPort.InfiniteTimeout
-If timeout = SerialPort.Infinite, byte[] references are cleared and garbage collection takes them out. Monitoring the process with dotnet-counters shows GC Heap Size cleared out and most of the byte[] references don't have any gcroots. Count/total size is much more reasonable:
+If timeout = SerialPort.Infinite, byte[] references are cleared and garbage collection takes them out as serial data is read. Monitoring the process with dotnet-counters shows GC Heap Size cleared out and most of the byte[] references don't have any gcroots. Count/total size is much more reasonable:
+
+#### dotnet-counters
+```
+Press p to pause, r to resume, q to quit.
+    Status: Running
+
+[System.Runtime]
+    % Time in GC since last GC (%)                                 0
+    Allocation Rate (B / 1 sec)                               28,500
+    CPU Usage (%)                                                  1
+    Exception Count (Count / 1 sec)                                0
+    GC Fragmentation (%)                                           0.076
+    GC Heap Size (MB)                                              0
+    Gen 0 GC Count (Count / 1 sec)                                 1
+    Gen 0 Size (B)                                                12
+    Gen 1 GC Count (Count / 1 sec)                                 0
+    Gen 1 Size (B)                                            89,052
+    Gen 2 GC Count (Count / 1 sec)                                 0
+    Gen 2 Size (B)                                           112,172
+    IL Bytes Jitted (B)                                       55,880
+    LOH Size (B)                                                  16
+    Monitor Lock Contention Count (Count / 1 sec)                  0
+    Number of Active Timers                                        0
+    Number of Assemblies Loaded                                   18
+    Number of Methods Jitted                                     527
+    POH (Pinned Object Heap) Size (B)                         20,016
+    ThreadPool Completed Work Item Count (Count / 1 sec)           1
+    ThreadPool Queue Length                                        0
+    ThreadPool Thread Count                                        4
+    Working Set (MB)                                              29
 ```
 
+#### dumpheap -stat
+```
+5eeaf120       75         6300 System.IO.FileStream
+02494e40      645         7960      Free
+72607b70       31        34776 System.Object[]
+7260ec38     1423        40268 System.SByte[]
+7260ef48       32        44436 System.Int32[]
+6e44600c       59        47655 System.Byte[]
+6e47da28       61        90292 System.Char[]
+72612208     1208       127894 System.String
+Total 5205 objects
+```
+
+### gcroot inspection
+```
+...
+62f3107c 6e44600c      132
+62f31118 6e44600c       29
+62f36310 6e44600c     1036
+62f39668 6e44600c       28
+62f39684 6e44600c      140
+62f3b8b8 6e44600c     1036
+62f3ecb8 6e44600c     1036
+62f41378 6e44600c     1036
+62f445b8 6e44600c     1036
+62f47bc0 6e44600c     1036
+62f49938 6e44600c     1036
+62f4bf70 6e44600c     1036
+62f5423c 6e44600c     1036
+62f5c304 6e44600c     1036
+62f643cc 6e44600c     1036
+
+Statistics:
+      MT    Count    TotalSize Class Name
+6e44600c       59        47655 System.Byte[]
+Total 59 objects
+> gcroot 62f643cc
+Found 0 unique roots (run 'gcroot -all' to see all roots).
+> gcroot 62f47bc0
+Found 0 unique roots (run 'gcroot -all' to see all roots).
+> gcroot 62f36310
+Found 0 unique roots (run 'gcroot -all' to see all roots).
 ```
 
 # Speculation
