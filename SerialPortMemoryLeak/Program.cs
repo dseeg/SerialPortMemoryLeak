@@ -7,7 +7,9 @@ namespace SerialPortMemoryLeak
     class Program
     {
         private const int ITERATIONS = 20000;
-        private const int TIMEOUT = 1; //SerialPort.InfiniteTimeout
+        
+        // Set this to SerialPort.InfiniteTimeout to mitigate TimeoutExceptions
+        private const int TIMEOUT = 1; //SerialPort.InfiniteTimeout;
         private static string _port;
         
         static void Main(string[] args)
@@ -38,6 +40,8 @@ namespace SerialPortMemoryLeak
             {
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write($"Progress: {i,8}/{ITERATIONS}");
+
+                // This is the buffer that gets lodged in SerialPorts internal SerialStream
                 byte[] buffer = new byte[1024];
                 try
                 {
@@ -45,9 +49,9 @@ namespace SerialPortMemoryLeak
                 }
                 catch (TimeoutException)
                 {
+                    // When a TimeoutException occurs under Linux (Unix?), the reference to buffer gets lodged in memory
                     continue;
                 }
-                
             }
 
             Console.WriteLine($"\nRun complete. Press <Enter> to continue.");
